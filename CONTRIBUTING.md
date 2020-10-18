@@ -23,3 +23,18 @@ Ready to contribute, but not sure how or where to start?
 
 7. The pull request will be reviwed and decided upon by the collaborators.
 
+
+# Steps to add a new Bot
+1. After cloning the repo. Create a new local branch having name same as the site for which you are creating the bot. For example, if you are creating a bot for Telegram, the new branch should be named Telegram.
+
+2. Checkout to the new branch using `git checkout branch-name`.
+
+3. Create a new directory having the same name as the branch
+
+4. Run `npm init -y`. Make sure the package name is in **lowercase**.
+
+5. All the source code of the bot should be in the **src** directory inside the bot directory
+
+6. The entry point of the Application should be an index.js file
+
+7. Use **Prettier** and **ESLint** to format code
