@@ -4,7 +4,9 @@ const router = express.Router();
 const {
   validationController,
   messageController,
-} = require("../controllers/controllers");
+} = require("../controllers/message.controller");
+
+const { getResponseText } = require("../controllers/dialog.controller");
 
 router.get("/", (req, res) => {
   res.send("Working");
@@ -18,8 +20,14 @@ router.get("/webhook", (req, res) => {
 });
 
 router.post("/webhook", (req, res) => {
-  console.log("Getting Post request");
   messageController(req, res);
+});
+
+router.get("/trial", (req, res) => {
+  getResponseText("hello").then((text) => {
+    console.log(text);
+  });
+  res.send("Working");
 });
 
 module.exports = router;
