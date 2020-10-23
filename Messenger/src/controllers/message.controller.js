@@ -5,6 +5,9 @@ require("dotenv").config();
 const VALIDATION_TOKEN = process.env.VALIDATION_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+//DIALOGFLOW CONTROLLER IMPORT
+const { getResponseText } = require("./dialog.controller");
+
 //CONTROLLER TO VALIDATE WEBHOOK REQUEST
 const validationController = (req, res) => {
   if (
@@ -17,9 +20,11 @@ const validationController = (req, res) => {
   }
 };
 
-const sendMessage = (event) => {
+const sendMessage = async (event) => {
   let sender = event.sender.id;
   let text = event.message.text;
+  const messageResponse = await getResponseText(text);
+  console.log(`Dialog Response: ${messageResponse}`);
   request(
     {
       url: "https://graph.facebook.com/me/messages",
@@ -27,7 +32,7 @@ const sendMessage = (event) => {
       method: "POST",
       json: {
         recipient: { id: sender },
-        message: { text: text },
+        message: { text: messageResponse },
       },
     },
     function (err, res) {
@@ -42,6 +47,7 @@ const sendMessage = (event) => {
 
 //CONTROLLER TO ACTUALLY RESPOND TO A MESSAGE
 const messageController = (req, res) => {
+  console.log("Message received");
   console.log(req.body);
   if (req.body.object === "page") {
     req.body.entry.forEach((entry) => {
@@ -55,4 +61,7 @@ const messageController = (req, res) => {
   }
 };
 
-module.exports = { validationController, messageController };
+module.exports = {
+  validationController,
+  messageController,
+};
