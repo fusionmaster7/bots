@@ -1,10 +1,3 @@
-const express = require("express");
-const app = express();
+const { startBot } = require("./bot");
 
-app.get("/", (req, res) => {
-  res.send("Working");
-});
-
-app.listen(3000, () => {
-  console.log("Listening on 3000");
-});
+startBot();
