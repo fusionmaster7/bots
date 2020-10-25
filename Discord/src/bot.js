@@ -9,9 +9,12 @@ const startBot = () => {
     console.log("Bot Ready");
   });
 
-  client.on("message", (message) => {
+  client.on("message", async (message) => {
     const messageString = message.content;
-    const messageResponse = messageController(messageString, config.prefix);
+    const messageResponse = await messageController(
+      messageString,
+      config.prefix
+    );
     if (messageResponse !== null) {
       message.channel.send(messageResponse);
     }
